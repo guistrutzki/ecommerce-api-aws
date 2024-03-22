@@ -4,6 +4,7 @@ import * as cdk from 'aws-cdk-lib';
 
 import { ProductsAppStack } from '../lib/productsApp-stack';
 import { ECommerceApiStack } from '../lib/ecommerceApi-stack';
+import { ProductsAppLayersStack } from '../lib/productsAppLayers-stack';
 
 const app = new cdk.App();
 
@@ -17,10 +18,20 @@ const tags = {
   team: 'Aguitech',
 };
 
+const productsAppLayersStack = new ProductsAppLayersStack(
+  app,
+  'ProductsAppLayers',
+  {
+    env,
+    tags,
+  }
+);
+
 const productsAppStack = new ProductsAppStack(app, 'ProductsApp', {
   env,
   tags,
 });
+productsAppStack.addDependency(productsAppLayersStack);
 
 const eCommerceApiStack = new ECommerceApiStack(app, 'ECommerceApi', {
   productsFetchHandler: productsAppStack.productsFetchHandler,
