@@ -4,9 +4,9 @@ import {
   Context,
 } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
-import { ProductRepository } from '/opt/nodejs/productsLayer';
+import { ProductRepository } from '/opt/productsLayer';
 
-const productsDdb = process.env.PRODUCTS_DDB ?? '';
+const productsDdb = process.env.PRODUCTS_DDB_TABLE_NAME ?? '';
 const ddbClient = new DynamoDB.DocumentClient();
 
 const productRepository = new ProductRepository(ddbClient, productsDdb);
